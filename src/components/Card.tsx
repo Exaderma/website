@@ -1,10 +1,12 @@
 import React from 'react';
 
+type Position = 'relative' | "absolute" | 'fixed';
+
 interface CardProps {
     backgroundColor?: string;
     width?: string | number;
     height?: string | number;
-    position?: string;
+    position?: Position;
     top?: string | number;
     left?: string | number;
     children?: React.ReactNode;
