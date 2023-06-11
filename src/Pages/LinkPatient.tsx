@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../index.css';
 import Box from '../components/Box';
 import Card from '../components/Card';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 
 interface FormValues {
-  email: string;
-  password?: string;
+    code: string;
 }
 
 
 const initialFormValues: FormValues = {
-  email: '',
-  password: '',
+  code: ''
 };
 
-function LoginPage() {
+function LinkPatient() {
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+  const data = useLocation();
+  let token: any = data.state as any;
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [token, navigate])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -31,29 +37,29 @@ function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    if (!formValues.password || !formValues.email) {
-      alert('Please fill all the fields');
+    console.log(formValues);
+    if (!formValues.code) {
+      alert('Please give a code');
       return;
     }
-    axios.post('http://176.141.147.142/patient/login',
-      {
-        email: formValues.email,
-        password: formValues.password
-      }
-    ).then((response) => {
-      if (response.status === 200) {
-        alert('Connected successfully');
-        localStorage.setItem("USERID", response.data.token);
-        navigate('/home/link', { state: { token: response.data.token } })
-      }
-    }).catch((error) => {
-      if (error.response.status === 400) {
-        alert('Invalid logs');
-      }
-      if (error.response.status === 500) {
-        alert('Server error');
-      }
-    });
+    axios.post('http://176.141.147.142/patient/link', {
+      headers: {
+        'Authorization': `Bearer ${token.token}`
+      },
+      code: formValues.code,
+      }).then((response) => {
+        if (response.status === 201) {
+          alert('Patient linked successfully');
+          navigate('/login', { state: { token: token.token } })
+        }
+      }).catch((error) => {
+        if (error.response.status === 400) {
+          alert('Invalid code');
+        }
+        if (error.response.status === 500) {
+          alert('Server error');
+        }
+      });
     setFormValues(initialFormValues);
   };
 
@@ -86,33 +92,22 @@ function LoginPage() {
         top="8vh"
         left="39vw"
       >
-        <img src="./src/assets/logo.png" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
+        <img src="../src/assets/logo.png" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
           <label>
-            <input className='form' type="email" name="email" value={formValues.email} placeholder="Adresse mail" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
+              Veuillez renseigner l'identifiant de votre médecin ci-dessous afin de pouvoir interagir avec lui
           </label>
           <label>
-            <input className='form' type="password" name="password" value={formValues.password} placeholder="Mot de passe" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
+            <input className='form' type="code" name="code" value={formValues.code} placeholder="Saisir le Code" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
           </label>
-          <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block" }}>
-            <input type="checkbox" id="rememberMe" name="rememberMe" value="rememberMe" style={{ width: "1vw", height: "1vw" }} />
-            <label htmlFor="rememberMe" style={{ color: "#0F6FFF", fontSize: "0.8vw", marginLeft: "0.5vw" }}>Se souvenir de moi</label>
-            <a href="#" style={{ color: "#0F6FFF", fontSize: "0.8vw", textAlign: "start", marginLeft: "5vw" }}>Mot de passe oublié ?</a>
-          </div>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
-            <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Se connecter</button>
+            <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Valider</button>
           </div>
         </form>
-        <div style={{ marginTop: "5vh", marginLeft: "auto", display: "block", textAlign: "center" }}>
-          Vous n'avez pas de compte ?
-          <div>
-            <a href="/register" style={{ color: "#0F6FFF" }}>Créer un compte</a>
-          </div>
-        </div>
       </Card>
     </div>
   );
 }
 
-export default LoginPage;
+export default LinkPatient;
