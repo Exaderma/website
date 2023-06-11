@@ -1,28 +1,24 @@
-
 import React from 'react';
 import '../index.css';
 import Box from '../components/Box';
 import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useState } from 'react';
 
 interface FormValues {
-  firstName: string;
-  lastName: string;
   email: string;
   password?: string;
-  confirmation?: string;
 }
 
 
 const initialFormValues: FormValues = {
-  firstName: '',
-  lastName: '',
   email: '',
   password: '',
-  confirmation: '',
 };
 
 function LoginPage() {
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -36,6 +32,28 @@ function LoginPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log(formValues);
+    if (!formValues.password || !formValues.email) {
+      alert('Please fill all the fields');
+      return;
+    }
+    axios.post('http://176.141.147.142/patient/login',
+      {
+        email: formValues.email,
+        password: formValues.password
+      }
+    ).then((response) => {
+      if (response.status === 200) {
+        alert('Connected successfully');
+        navigate('/home', { state: { token: response.data.token } })
+      }
+    }).catch((error) => {
+      if (error.response.status === 400) {
+        alert('Invalid logs');
+      }
+      if (error.response.status === 500) {
+        alert('Server error');
+      }
+    });
     setFormValues(initialFormValues);
   };
 
@@ -63,48 +81,33 @@ function LoginPage() {
       <Card
         backgroundColor="#E0E6FD"
         width="22vw"
-        height="78vh"
+        height="fit-content"
         position="absolute"
         top="8vh"
         left="39vw"
       >
         <img src="./src/assets/logo.png" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
-        {/* <h1 style={{color: "#0F6FFF", fontSize: "2.5vw", textAlign: "center"}}>Connexion</h1> */}
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
-          <label style={{ marginRight: "0.4vw" }}>
-            <input className='form' type="text" name="firstName" value={formValues.firstName} placeholder="Prénom" style={{ width: "9.5vw" }} onChange={handleInputChange} />
-          </label>
-          <label>
-            <input className='form' type="text" name="lastName" value={formValues.lastName} placeholder="Nom" style={{ width: "9.5vw" }} onChange={handleInputChange} />
-          </label>
-          <br />
           <label>
             <input className='form' type="email" name="email" value={formValues.email} placeholder="Adresse mail" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
           </label>
-          <br />
           <label>
-            <input className='form' type="password" name="password" value={formValues.password} placeholder="Mot de passe" style={{ marginTop: "2vh",width: "20vw" }} onChange={handleInputChange} />
+            <input className='form' type="password" name="password" value={formValues.password} placeholder="Mot de passe" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
           </label>
-          <br />
-          <label>
-            <input className='form' type="password" name="confirmation" value={formValues.confirmation} placeholder="Confirmation mot de passe" style={{ marginTop: "2vh",width: "20vw" }} onChange={handleInputChange} />
-          </label>
-          <br />
-          {/* <checkbox style={{color: "#333533", fontSize: "1.5vw", textAlign: "center"}}>Se souvenir de moi</checkbox> */}
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block" }}>
             <input type="checkbox" id="rememberMe" name="rememberMe" value="rememberMe" style={{ width: "1vw", height: "1vw" }} />
             <label htmlFor="rememberMe" style={{ color: "#0F6FFF", fontSize: "0.8vw", marginLeft: "0.5vw" }}>Se souvenir de moi</label>
             <a href="#" style={{ color: "#0F6FFF", fontSize: "0.8vw", textAlign: "start", marginLeft: "5vw" }}>Mot de passe oublié ?</a>
           </div>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
-            <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Créer un compte</button>
+            <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Se connecter</button>
           </div>
         </form>
         <div style={{ marginTop: "5vh", marginLeft: "auto", display: "block", textAlign: "center" }}>
-          Vous avez déjà un compte ?
+          Vous n'avez pas de compte ?
           <div>
-            <a href="#" style={{ color: "#0F6FFF" }}>Connectez-vous</a>
+            <a href="/register" style={{ color: "#0F6FFF" }}>Créer un compte</a>
           </div>
         </div>
       </Card>
