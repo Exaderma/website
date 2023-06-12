@@ -116,7 +116,7 @@ function LoginPagePro() {
         <div style={{ marginTop: "5vh", marginLeft: "auto", display: "block", textAlign: "center" }}>
           Vous n'avez pas de compte ?
           <div style={{ marginTop: "1vh", marginLeft: "7vw", display: "flex", textAlign: "center" }}>
-            <a href="/register" style={{ color: "#0F6FFF", marginRight: "1vw" }}>Créer un compte</a>
+            <a href="/pro/register" style={{ color: "#0F6FFF", marginRight: "1vw" }}>Créer un compte</a>
             <Popup content="Cliquez ici pour créer un compte si vous n'en avez pas" />
           </div>
         </div>
