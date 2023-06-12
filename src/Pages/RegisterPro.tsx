@@ -139,7 +139,7 @@ function RegisterPagePro() {
         <div style={{ marginTop: "5vh", marginLeft: "auto", display: "block", textAlign: "center" }}>
           Vous avez déjà un compte ?
           <div style={{ marginTop: "1vh", marginLeft: "7vw", display: "flex", textAlign: "center" }}>
-            <a href="/login" style={{ color: "#0F6FFF", marginRight: "1vw"  }}>Connectez-vous</a>
+            <a href="/pro/login" style={{ color: "#0F6FFF", marginRight: "1vw"  }}>Connectez-vous</a>
             <Popup content="Cliquer ici pour acceder a la page de connexion si vous avez déjà un compte" />
           </div>
         </div>
