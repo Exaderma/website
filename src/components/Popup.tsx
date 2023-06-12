@@ -1,12 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../App.css';
 
 interface PopoverProps {
   content: React.ReactNode;
-}
-
-interface PopupProps {
-  onClick: () => void;
 }
 
 const Popup: React.FC<PopoverProps> = ({ content }) => {

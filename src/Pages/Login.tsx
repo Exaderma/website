@@ -1,6 +1,5 @@
 import React from 'react';
 import '../index.css';
-import Box from '../components/Box';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

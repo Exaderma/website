@@ -1,6 +1,5 @@
 import React from 'react';
 import '../index.css';
-import Box from '../components/Box';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -124,7 +123,7 @@ function RegisterPage() {
           Vous avez déjà un compte ?
           <div style={{ marginTop: "1vh", marginLeft: "7vw", display: "flex", textAlign: "center" }}>
             <a href="/login" style={{ color: "#0F6FFF", marginRight: "1vw"  }}>Connectez-vous</a>
-            <Popup content="Cliquez ici pour acceder a la page de connexion si vous avez déjà un compte" />
+            <Popup content="Cliquer ici pour acceder a la page de connexion si vous avez déjà un compte" />
           </div>
         </div>
       </Card>
