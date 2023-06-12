@@ -43,10 +43,11 @@ function LinkPatient() {
       return;
     }
     axios.post('http://176.141.147.142/patient/link', {
+      code : formValues.code
+    }, {
       headers: {
         'Authorization': `Bearer ${token.token}`
-      },
-      code: formValues.code,
+      }
       }).then((response) => {
         if (response.status === 201) {
           alert('Patient linked successfully');

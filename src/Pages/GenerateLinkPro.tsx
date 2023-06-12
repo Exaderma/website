@@ -30,7 +30,7 @@ function GenerateLinkPro() {
     ).then((response) => {
       console.log(response);
       if (response.status === 200) {
-        setCode(response.data.code);
+        setCode(response.data);
       }
     }).catch((error) => {
       console.log(error);
@@ -69,7 +69,7 @@ function GenerateLinkPro() {
         top="8vh"
         left="39vw"
       >
-        <img src="../logo.png" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
+        <img src="../ExadermaPro.svg" alt="logo" style={{ width: "13vw", height: "12vw", marginLeft: "auto", marginRight: "auto", display: "block",  }} />
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
           <label>
@@ -87,7 +87,7 @@ function GenerateLinkPro() {
             <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Générer un code</button>
           </div>
         </form>
-        <button style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none", marginTop: "1vw" }} onClick={() => {
+        <button style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none", marginTop: "1vw", marginLeft: "1.8rem", display: "block" }} onClick={() => {
           localStorage.removeItem('USERID')
           navigate('/pro/login')
         }}>Retour</button>
