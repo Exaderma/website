@@ -5,6 +5,10 @@ interface PopoverProps {
   content: React.ReactNode;
 }
 
+interface PopupProps {
+  onClick: () => void;
+}
+
 const Popup: React.FC<PopoverProps> = ({ content }) => {
     const [isPopoverOpen, setPopoverOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);

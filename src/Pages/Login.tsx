@@ -91,7 +91,7 @@ function LoginPage() {
             <label htmlFor="rememberMe" style={{ color: "#0F6FFF", fontSize: "0.8vw", marginLeft: "0.5vw", marginRight: "0.5vw" }}>Se souvenir de moi</label>
             <Popup content="Cocher cette case pour rester connecté" />
             <a href="#" style={{ color: "#0F6FFF", fontSize: "0.8vw", textAlign: "start", marginLeft: "3vw", marginRight: "0.5vw" }}>Mot de passe oublié ?</a>
-            <Popup content="Cliquez ici pour recevoir un mail qui servira a réinitialiser votre mot de passe" />
+            <Popup content="Cliquer ici pour recevoir un mail qui servira à réinitialiser votre mot de passe" />
           </div>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
             <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Se connecter</button>
@@ -101,7 +101,7 @@ function LoginPage() {
           Vous n'avez pas de compte ?
           <div style={{ marginTop: "1vh", marginLeft: "7vw", display: "flex", textAlign: "center" }}>
             <a href="/register" style={{ color: "#0F6FFF", marginRight: "1vw" }}>Créer un compte</a>
-            <Popup content="Cliquez ici pour créer un compte" />
+            <Popup content="Cliquer ici pour créer un compte si vous n'en avez pas" />
           </div>
         </div>
       </Card>
