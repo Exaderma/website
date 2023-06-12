@@ -43,6 +43,7 @@ function LoginPagePro() {
     ).then((response) => {
       if (response.status === 200) {
         alert('Connected successfully');
+        console.log(response.data.token);
         localStorage.setItem("USERID", response.data.token);
         navigate('/pro/generateLink', { state: { token: response.data.token } })
       }
@@ -86,7 +87,7 @@ function LoginPagePro() {
         top="8vh"
         left="39vw"
       >
-        <img src="../logo.png" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
+        <img src="../ExadermaPro.svg" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
           <label>
