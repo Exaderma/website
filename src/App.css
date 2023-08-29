@@ -75,4 +75,31 @@
     color: black;
     padding: 0.7rem;
     border: none
+  
+.popover-button {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #8b8b8b;
+  border-radius: 50px;
+  background-color: #fff;
+  cursor: pointer;
+  font-family: 'Times New Roman';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #636363;
+}
+
+@font-face {
+  font-family: 'Anita semi square';
+  src: url('./src/assets/Anita semi square.ttf');
+}
+
+.Titre {
+  font-family: 'Anita semi square';
+  font-size: 50px;
+  color: #636363;
+  text-align: center;
+  margin-top: 50px;
 }
