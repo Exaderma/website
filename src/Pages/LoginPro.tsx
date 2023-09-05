@@ -35,7 +35,7 @@ function LoginPagePro() {
       alert('Please fill all the fields');
       return;
     }
-    axios.post('http://176.141.147.142/professional/login',
+    axios.post('http://51.103.66.175:8080/professional/login',
       {
         email: formValues.email,
         password: formValues.password
@@ -43,9 +43,9 @@ function LoginPagePro() {
     ).then((response) => {
       if (response.status === 200) {
         alert('Connected successfully');
-        console.log(response.data.token);
-        localStorage.setItem("USERID", response.data.token);
-        navigate('/pro/generateLink', { state: { token: response.data.token } })
+        console.log(response.data);
+        localStorage.setItem("USERID", response.data);
+        navigate('/pro/home', { state: { token: response.data } })
       }
     }).catch((error) => {
       if (error.response.status === 400) {
