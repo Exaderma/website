@@ -17,28 +17,21 @@ function UserProfile() {
     const [departement, setDepartement] = useState("");
 
     const [editMode, setEditMode] = useState(false);
-    // try {
-    //     const decoded = jwt.verify(token, secretKey);
-    //     console.log('Token décodé :', decoded);
-    // } catch (error) {
-    //     console.error('Erreur de décodage du token :', error);
-    // }
 
-    // useEffect(() => {
-    //     axios
-    //     .get("http://51.103.66.175:8080/professional/getUserProfile", {
-    //         headers: {
-    //         Authorization: "Bearer " + localStorage.getItem("USERID"),
-    //         },
-    //     })
-    //     .then((response) => {
-    //         console.log(response.data);
-    //         setUsers(response.data);
-    //     })
-    //     .catch((error) => {
-    //         console.error("Erreur lors de la récupération des utilisateurs :", error);
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios
+        .get("http://51.103.66.175:8080/professional/getUserProfile", {
+            headers: {
+            Authorization: "Bearer " + localStorage.getItem("USERID"),
+            },
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error("Erreur lors de la récupération des utilisateurs :", error);
+        });
+    }, []);
 
     // const setUsers = (data) => {
     //     console.log("data : ", data.firstName);
@@ -208,6 +201,7 @@ function UserProfile() {
                                             color: "blue",
                                             cursor: "pointer",
                                             marginLeft: "6rem",
+                                            fontSize: "1.3rem"
                                         }}onClick={() => setIsNomEditable(true)}>Modifier
                                     </span>
                                 </div>
@@ -240,6 +234,7 @@ function UserProfile() {
                                         color: "blue",
                                         cursor: "pointer",
                                         marginLeft: "3rem",
+                                        fontSize: "1.3rem"
                                     }}onClick={() => setIsPrenomEditable(true)}>
                                     Modifier
                                 </span>
@@ -252,9 +247,9 @@ function UserProfile() {
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.3rem", justifyItems: "center" }}>
-                            {renderField("Sexe", sexe, setSexe)}
                             {renderField("Adresse Email", adresseMail, setAdresseMail)}
                             {renderField("Téléphone", phone, setPhone)}
+                            {renderField("Sexe", sexe, setSexe)}
                         </div>
             
                         {editMode && (
