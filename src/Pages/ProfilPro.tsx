@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/NavbarPro";
 import profilPicture from "../assets/profilPicture.png";
 import axios from "axios";
@@ -43,7 +43,7 @@ function UserProfile() {
     //     handleSaveChanges();
     // }
 
-    const renderField = (label, value, stateUpdater) => {
+    const renderField = (label: any, value: any, stateUpdater: any) => {
         const isEditMode = editMode && stateUpdater !== undefined;
     
         return (
@@ -104,7 +104,8 @@ function UserProfile() {
       };
 
     useEffect(() => {
-        const savedData = JSON.parse(localStorage.getItem("userProfileData"));
+        const savedDataString = localStorage.getItem("userProfileData");
+        const savedData = savedDataString ? JSON.parse(savedDataString) : null;
     
         if (savedData) {
             setNom(savedData.nom || "");
@@ -136,7 +137,8 @@ function UserProfile() {
         };
 
         const reloadSavedData = () => {
-            const savedData = JSON.parse(localStorage.getItem("userProfileData"));
+            const savedDataString = localStorage.getItem("userProfileData");
+            const savedData = savedDataString ? JSON.parse(savedDataString) : null;
 
             if (savedData) {
                 setNom(savedData.nom || "");
@@ -168,7 +170,12 @@ function UserProfile() {
                         <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => setPhotoDeProfil(URL.createObjectURL(e.target.files[0]))}
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                setPhotoDeProfil(URL.createObjectURL(file));
+                            }
+                        }}
                         />
                     ) : null}
                     </div>
