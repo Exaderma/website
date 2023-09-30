@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../assets/logo.png";
 import Hamburger from "../assets/hamburger.svg";
 import setting from "../assets/setting.png";
 import profil from "../assets/profil.png";
 import home from "../assets/home.png";
 import message from "../assets/message.png";
 import galerie from "../assets/galerie.svg";
+import logo from "../assets/logo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -15,10 +15,6 @@ const Navbar = () => {
 
   const handleToggle = () => {
     setNavbarOpen((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setNavbarOpen(false);
   };
 
   return (
@@ -38,7 +34,7 @@ const Navbar = () => {
       {navbarOpen && (
         <div className="nav-header">
           <Link to="/pro/home" className="nav-logo">
-            <img src={Logo} alt="logo" style={{ width: "65%", height: "17%", paddingLeft: "17%" }} />
+            <img src={logo} alt="logo" style={{ width: "65%", height: "17%", paddingLeft: "17%" }} />
           </Link>
           <div className="nav-links">
             <ul className="navbar" style={{ listStyle: "none", paddingLeft: "7%", flexDirection: "column", display: "flex" }}>
