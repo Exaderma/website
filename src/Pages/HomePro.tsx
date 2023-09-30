@@ -29,6 +29,12 @@ function Homepro() {
         });
     }, []);
 
+    const [isPopupOpen, setPopupOpen] = useState(false);
+
+    const togglePopup = () => {
+        setPopupOpen(!isPopupOpen);
+    };
+
     const handleSearch = () => {
         console.log("Recherche pour :", searchTerm);
     };
