@@ -1,0 +1,7 @@
+{
+    "presets": [
+      "@babel/preset-env",     // Pour la compatibilité avec les versions ECMAScript
+      "@babel/preset-typescript" // Pour la transpilation TypeScript
+    ]
+    // Vous pouvez ajouter d'autres plugins ou options de configuration selon vos besoins.
+  }
