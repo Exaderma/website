@@ -44,8 +44,8 @@ function LoginPagePro() {
       if (response.status === 200) {
         alert('Connected successfully');
         console.log(response.data);
-        localStorage.setItem("USERID", response.data);
-        navigate('/pro/home', { state: { token: response.data } })
+        localStorage.setItem("USERID", response.data.token);
+        navigate('/pro/home', { state: { token: response.data.token } })
       }
     }).catch((error) => {
       if (error.response.status === 400) {

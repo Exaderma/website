@@ -15,6 +15,7 @@ function Homepro() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
+        console.log("Le useEffect() est appelé.");
         axios
         .get("http://51.103.66.175:8080/professional/getLink", {
             headers: {
@@ -22,11 +23,13 @@ function Homepro() {
             },
         })
         .then((response) => {
+            console.log(response.data);
             setUsers(response.data);
         })
         .catch((error) => {
             console.error("Erreur lors de la récupération des utilisateurs :", error);
         });
+
     }, []);
 
     const [isPopupOpen, setPopupOpen] = useState(false);
@@ -54,11 +57,11 @@ function Homepro() {
     return (
         <div style={{display: "flex", flexDirection: "row", width: "100%", height: "100%", padding: "0", margin: "0"}}>
             <Navbar isNavbarOpen={isNavbarOpen} toggleNavbar={toggleNavbar} />
-            <div className="App">
-                <button onClick={togglePopup}>Ouvrir la pop-up</button>
-                <Popover isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} message="J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/" />
-            </div>
             <div style={{display: "flex", flexDirection: "column", width: contentWidth }}>
+                {/* <div className="App">
+                    <button onClick={togglePopup}>Ouvrir la pop-up</button>
+                    <Popover isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} message="J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/" />
+                </div> */}
                 <div style={{display: "flex", flexDirection: "row", width: "100%"}}>
                     <h1 style = {{color: "#000000", fontSize: "4rem", marginLeft: "auto"}}>
                     Contacter votre patient
@@ -79,9 +82,8 @@ function Homepro() {
                         style={{width: "100%", height: "100%", marginLeft: "-30%", display: "block", fontSize: "1.5rem", fontFamily: "Roboto", fontWeight: "700", fontStyle: "normal", lineHeight: "normal"}}
                     />
                 </div>
-                <div style={{ width: "80%", height: "1px", background: "#000000",  marginLeft: "auto", marginRight: "auto"}}></div>
-                <div style={{display: "flex", flexDirection: "row", width: "70%", height: "100%", marginLeft: "auto", marginRight: "auto"}}>
-                    <ul>
+                <div className="patient-list-container" style={{display: "flex", flexDirection: "row", width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", justifyContent: "space-between"}}>
+                    <ul style={{display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", justifyContent: "space-between", gap: "5%"}}>
                         {filteredUsers.map((user) => (
                         <li key={user.id} style={{listStyle: "none"}}>
                             <Card width="10vw" height="fit-content">
