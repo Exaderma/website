@@ -8,16 +8,17 @@ import Popover from "../components/Popover";
 function UserProfile() {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const [nom, setNom] = useState("");
-    const [prenom, setPrenom] = useState("");
-    const [photoDeProfil, setPhotoDeProfil] = useState("");
+    const [lastName, setNom] = useState("");
+    const [firstName, setPrenom] = useState("");
+    const [photo, setPhotoDeProfil] = useState("");
     const [sexe, setSexe] = useState("");
-    const [adresseMail, setAdresseMail] = useState("");
+    const [newEmail, setAdresseMail] = useState("");
     const [phone, setPhone] = useState("");
-    const [etab, setEtab] = useState("");
-    const [departement, setDepartement] = useState("");
+    const [address, setEtab] = useState("");
+    const [department, setDepartement] = useState("");
 
     useEffect(() => {
+        console.log("Le useEffect() est appelé.");
         const token = localStorage.getItem("USERID");
         if (!token) {
             return;
@@ -38,20 +39,7 @@ function UserProfile() {
         .catch((error) => {
             console.error("Erreur lors de la récupération des utilisateurs :", error);
         });
-
-        // const savedDataString = localStorage.getItem("userProfileData");
-        // const savedData = savedDataString ? JSON.parse(savedDataString) : null;
-    
-        // if (savedData) {
-        //     setNom(savedData.nom || "");
-        //     setPrenom(savedData.prenom || "");
-        //     setPhotoDeProfil(savedData.photoDeProfil || "");
-        //     setSexe(savedData.sexe || "");
-        //     setAdresseMail(savedData.adresseMail || "");
-        //     setPhone(savedData.phone || "");
-        //     setEtab(savedData.etab || "");
-        //     setDepartement(savedData.departement || "");
-        // }
+        // reloadSavedData();
     }, []);
 
     const SetUser = (data) => {
@@ -62,30 +50,30 @@ function UserProfile() {
         setSexe(data.sexe);
         setAdresseMail(data.email);
         setPhone(data.phone);
-        setEtab(data.school);
+        setEtab(data.address);
         setDepartement(data.department);
-        handleSaveChanges();
+        handleSaveChanges(true);
         localStorage.setItem("userProfileData", JSON.stringify(data));
     }
 
 
         
-    const handleSaveChanges = () => {
+    const handleSaveChanges = (onLoad:boolean) => {
+        setPopupOpen(false);
+        setEditMode(false);
         const userProfileData = {
-            nom,
-            prenom,
-            photoDeProfil,
-            sexe,
-            adresseMail,
+            firstName,
+            lastName,
+            newEmail,
             phone,
-            etab,
-            departement,
+            department,
+            address,
         };
 
         localStorage.setItem("userProfileData", JSON.stringify(userProfileData));
-        SaveInBase(userProfileData);
-    
-        setEditMode(false);
+        if (!onLoad) {
+            SaveInBase(userProfileData);
+        }
     };
 
     const SaveInBase = (userProfileData:any) => {
@@ -93,30 +81,34 @@ function UserProfile() {
         if (!token) {
             return;
         }
+
+        console.log("SaveInBase");
     
         const updateUrls = [
             "http://51.103.66.175:8080/updateProfile/professional/firstName",
             "http://51.103.66.175:8080/updateProfile/professional/lastName",
             "http://51.103.66.175:8080/updateProfile/professional/email",
-            "http://51.103.66.175:8080/updateProfile/professional/password",
             "http://51.103.66.175:8080/updateProfile/professional/phone",
             "http://51.103.66.175:8080/updateProfile/professional/department",
             "http://51.103.66.175:8080/updateProfile/professional/address"
         ];
     
         updateUrls.forEach(async (url, index) => {
+            if (!userProfileData[Object.keys(userProfileData)[index]]) {
+                return;
+            }
             try {
                 const field = Object.keys(userProfileData)[index];
                 const value = userProfileData[field];
-                await axios.put(url, {
-                    [field]: value
-                }, {
+                await axios.post(url, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + token
                     }
+                }, { [field]: value
                 });
             } catch (error) {
+                console.log("field : ", Object.keys(userProfileData)[index]);
                 console.error(`Erreur lors de la mise à jour de ${updateUrls[index]} :`, error);
             }
         });
@@ -124,21 +116,21 @@ function UserProfile() {
 
     const buttons = [
         { label: "Annuler", onClick: () => setPopupOpen(false), className: "close-button" },
-        { label: "Sauvegarder", onClick: handleSaveChanges, className: "save-button" },
-    ]
+        { label: "Sauvegarder", onClick: () => handleSaveChanges(false), className: "save-button" },
+    ];
 
     const reloadSavedData = () => {
         const savedDataString = localStorage.getItem("userProfileData");
         const savedData = savedDataString ? JSON.parse(savedDataString) : null;
         if (savedData) {
-            setNom(savedData.nom || "");
-            setPrenom(savedData.prenom || "");
-            setPhotoDeProfil(savedData.photoDeProfil || "");
+            setNom(savedData.lastName || "");
+            setPrenom(savedData.firstName || "");
+            setPhotoDeProfil(savedData.photo || "");
             setSexe(savedData.sexe || "");
-            setAdresseMail(savedData.adresseMail || "");
+            setAdresseMail(savedData.newEmail || "");
             setPhone(savedData.phone || "");
-            setEtab(savedData.etab || "");
-            setDepartement(savedData.departement || "");
+            setEtab(savedData.address || "");
+            setDepartement(savedData.department || "");
         }
     }
 
@@ -207,8 +199,8 @@ function UserProfile() {
                     ) : null}
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.5rem" }}>
-                        {renderField("Nom", nom, setNom)}
-                        {renderField("Prénom", prenom, setPrenom)}
+                        {renderField("Nom", lastName, setNom)}
+                        {renderField("Prénom", firstName, setPrenom)}
                     </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "100%" }}>
@@ -216,9 +208,9 @@ function UserProfile() {
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.3rem", justifyItems: "center" }}>
-                            {renderField("Adresse Email", adresseMail, setAdresseMail)}
+                            {renderField("Adresse Email", newEmail, setAdresseMail)}
                             {renderField("Téléphone", phone, setPhone)}
-                            {renderField("Sexe", sexe, setSexe)}
+                            {/* {renderField("Sexe", sexe, setSexe)} */}
                         </div>
             
                         {editMode && (
@@ -241,8 +233,8 @@ function UserProfile() {
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", width: "50%", height: "50%", marginLeft: "5%", marginTop: "5%" }}>
                         <div style={{ display: "flex", flexDirection: "column"}}>
-                            {renderField("Etablissement", etab, setEtab)}
-                            {renderField("Département", departement, setDepartement)}
+                            {renderField("Etablissement", address, setEtab)}
+                            {renderField("Département", department, setDepartement)}
                         </div>
                     </div>
                 </div>
@@ -262,8 +254,8 @@ function UserProfile() {
                     marginBottom: "5%",
                 }}
                 onClick={() => {
-                    localStorage.removeItem("USERID");
-                    window.location.href = "/";
+                    localStorage.clear();
+                    window.location.href = "/pro/login";
                 }}
                 >
                     Se Déconnecter
