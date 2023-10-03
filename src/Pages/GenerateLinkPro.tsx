@@ -8,12 +8,13 @@ import { useState } from 'react';
 
 function GenerateLinkPro() {
   const navigate = useNavigate()
+  const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const data = useLocation();
   let token: any = data.state as any;
 
   useEffect(() => {
-    if (!token.token) {
+    if (!token || !token.token) {
       navigate('/login')
     }
   }, [token, navigate])
@@ -21,13 +22,15 @@ function GenerateLinkPro() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log("TOKEN IS :", token.token);
-    axios.get('http://176.141.147.142/professional/link',
-      {
-        headers: {
-          'Authorization': `Bearer ${token.token}`
-        }
+    console.log(email);
+    axios.post('http://51.103.66.175:8080/professional/link',{
+      email : email
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token.token}`
       }
-    ).then((response) => {
+    }).then((response) => {
+      console.log(email);
       console.log(response);
       if (response.status === 200) {
         setCode(response.data);
@@ -73,17 +76,20 @@ function GenerateLinkPro() {
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
           <label>
-              Cliquez sur le bouton pour générer le code de liaison pour votre patient
+              Rentrez l'email correspondant à votre nouveau patient. Une fois le code généré, il sera affiché ci-dessous.
           </label>
           <div>
             <br />
             <br />
           <label>
-            The code is : {code}
+            Le code à donner au patient est : {code}
           </label>
             <br />
           </div>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
+          <input type="email" name="email" style={{ width: "85%", height: "3vw", borderRadius: "0.5vw", margin: "auto" }} onChange={(e: any)=> { setEmail(e.target.value) }} />
+          <br />
+          <br />
             <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Générer un code</button>
           </div>
         </form>

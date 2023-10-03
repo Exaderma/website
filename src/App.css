@@ -1,40 +1,77 @@
-.popover {
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  z-index: 100;
-  width: 300px;
-  position : absolute;
-  transform: translate(5%, -50%);
+.BackgroundLogo {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("headhtml.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.99999;
 }
-  
-.popover-button {
-  width: 15px;
-  height: 15px;
-  border: 2px solid #8b8b8b;
-  border-radius: 50px;
-  background-color: #fff;
-  cursor: pointer;
-  font-family: 'Times New Roman';
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #636363;
+.AddDoctor {
+    position: absolute;
+    top : 2rem;
+    background-color: #6093DF;
+    border-radius: 20px;
+    color: #FFFFFF;
+    padding: 0.9rem;
+    border-color: black;
+    border-width: 0.2rem;
+    width: fit-content;
+    font-size: large;
 }
 
-@font-face {
-  font-family: 'Anita semi square';
-  src: url('./src/assets/Anita semi square.ttf');
+.ProfileButton {
+    position: absolute;
+    top : 3rem;
+    right: 2rem;
+    background-image: url("CardPicture.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+    width: 5rem;
+    height: 5rem;
+    border-color: black;
+    border-width: 4rem;
 }
 
-.Titre {
-  font-family: 'Anita semi square';
-  font-size: 50px;
-  color: #636363;
-  text-align: center;
-  margin-top: 50px;
+.DoctorCard {
+    display: grid;
+    margin: 3rem;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 2rem;
+    border-width: 10px;
+    border-color: black;
+    height: fit-content;
+    width: fit-content;
+}
+
+.ProfileCard {
+    background-image: url("CardPicture.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    width: 100%;
+    height: 17vh;
+}
+
+.DoctorName {
+    padding-top: 1rem;
+}
+
+.DoctorSpe {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.MessageButton {
+    background-color: #6093DF;
+    border-radius: 20px;
+    color: black;
+    padding: 0.7rem;
+    border: none
 }

@@ -50,7 +50,7 @@ function RegisterPagePro() {
       password: formValues.password
     }).then((response) => {
       console.log(response);
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert('Account created successfully');
         navigate('/pro/login')
       }
