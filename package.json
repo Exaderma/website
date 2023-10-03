@@ -8,11 +8,12 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "jest --config jest.config.mjs --coverage tests/"
+    "test": "jest --config=jest.config.cjs"
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "jsonwebtoken": "^9.0.2",
+    "jsdom": "^22.1.0",
+    "jwt-decode": "^3.1.2",
     "navigate": "^0.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,17 +21,20 @@
     "vercel": "^24.2.4"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.1.3",
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/preset-typescript": "^7.23.0",
     "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.5",
-    "@types/react": "^18.2.24",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8",
-    "@types/react-router-dom": "^5.3.3",
-    "@types/testing-library__jest-dom": "^6.0.0",
+    "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react": "^4.0.0",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
@@ -40,5 +44,14 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.2"
+  },
+  "description": "Repository for the website, [here](https://exaderma-mistercouscous.vercel.app/) if you want go the deployment.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }
