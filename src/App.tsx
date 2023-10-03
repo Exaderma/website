@@ -6,6 +6,7 @@ import LinkPatient from './Pages/LinkPatient'
 import RegisterPagePro from './Pages/RegisterPro'
 import LoginPagePro from './Pages/LoginPro'
 import GenerateLinkPro from './Pages/GenerateLinkPro'
+import HomePatient from './Pages/HomePatient'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/pro/register' element={<RegisterPagePro />} />
           <Route path='/home/link' element={<LinkPatient />} />
           <Route path='/pro/generateLink' element={<GenerateLinkPro />} />
+          <Route path='/home' element={<HomePatient />} />
           <Route path='*' element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
