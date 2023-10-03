@@ -5,12 +5,12 @@ import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
+import Popup from '../components/Popup';
 
 interface FormValues {
   email: string;
   password?: string;
 }
-
 
 const initialFormValues: FormValues = {
   email: '',
@@ -90,16 +90,24 @@ function LoginPagePro() {
         <img src="../ExadermaPro.svg" alt="logo" style={{ width: "13vw", height: "10vw", marginLeft: "auto", marginRight: "auto", display: "block" }} />
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
-          <label>
-            <input className='form' type="email" name="email" value={formValues.email} placeholder="Adresse mail" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
-          </label>
-          <label>
-            <input className='form' type="password" name="password" value={formValues.password} placeholder="Mot de passe" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
-          </label>
-          <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label>
+              <input className='form' type="email" name="email" value={formValues.email} placeholder="Adresse mail" style={{ marginTop: "2vh", width: "19vw" }} onChange={handleInputChange} />
+            </label>
+            <Popup content="Veuillez entrer l'adresse mail associée à votre compte" />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label>
+              <input className='form' type="password" name="password" value={formValues.password} placeholder="Mot de passe" style={{ marginTop: "2vh", width: "19vw" }} onChange={handleInputChange} />
+            </label>
+            <Popup content="Veuillez entrer le mot de passe associé à votre compte" />
+          </div>
+          <div style={{ marginTop: "1vw", marginLeft: "auto",  display: 'flex', alignItems: 'center' }}>
             <input type="checkbox" id="rememberMe" name="rememberMe" value="rememberMe" style={{ width: "1vw", height: "1vw" }} />
-            <label htmlFor="rememberMe" style={{ color: "#0F6FFF", fontSize: "0.8vw", marginLeft: "0.5vw" }}>Se souvenir de moi</label>
-            <a href="#" style={{ color: "#0F6FFF", fontSize: "0.8vw", textAlign: "start", marginLeft: "5vw" }}>Mot de passe oublié ?</a>
+            <label htmlFor="rememberMe" style={{ color: "#0F6FFF", fontSize: "0.8vw", marginLeft: "0.5vw", marginRight: "0.5vw" }}>Se souvenir de moi</label>
+            <Popup content="Cocher cette case pour rester connecté" />
+            <a href="#" style={{ color: "#0F6FFF", fontSize: "0.8vw", textAlign: "start", marginLeft: "3vw", marginRight: "0.5vw" }}>Mot de passe oublié ?</a>
+            <Popup content="Cliquer ici pour recevoir un mail qui servira à réinitialiser votre mot de passe" />
           </div>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
             <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Se connecter</button>
@@ -107,8 +115,9 @@ function LoginPagePro() {
         </form>
         <div style={{ marginTop: "5vh", marginLeft: "auto", display: "block", textAlign: "center" }}>
           Vous n'avez pas de compte ?
-          <div>
-            <a href="/pro/register" style={{ color: "#0F6FFF" }}>Créer un compte</a>
+          <div style={{ marginTop: "1vh", marginLeft: "7vw", display: "flex", textAlign: "center" }}>
+            <a href="/pro/register" style={{ color: "#0F6FFF", marginRight: "1vw" }}>Créer un compte</a>
+            <Popup content="Cliquez ici pour créer un compte si vous n'en avez pas" />
           </div>
         </div>
       </Card>
