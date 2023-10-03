@@ -72,7 +72,7 @@ function GenerateLinkPro() {
         top="8vh"
         left="39vw"
       >
-        <img src="../ExadermaPro.svg" alt="logo" style={{ width: "13vw", height: "12vw", marginLeft: "auto", marginRight: "auto", display: "block",  }} />
+        <img src="../../public/ExadermaPro.svg" alt="logo" style={{ width: "13vw", height: "12vw", marginLeft: "auto", marginRight: "auto", display: "block",  }} />
 
         <form onSubmit={handleSubmit} style={{ marginTop: "2.5vw", marginLeft: "0.5vw", display: "block" }}>
           <label>

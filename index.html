@@ -6,12 +6,22 @@
     <meta Cross-Origin-Opener-Policy: same-origin-allow-popups />
     <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; style-src 'self' 'unsafe-inline'; frame-src; connect-src 'self' http://51.103.66.175:8080/ http://51.103.66.175:8080/patient/ http://51.103.66.175:8080/professional; script-src 'self'">
-    <link rel="icon" type="image/svg+xml" href="./public/headhtml.png" />
+    <link rel="icon" type="image/svg+xml" href="./headhtml.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exaderma</title>
   </head>
   <body>
-    <div id="root"></div>
+    <style>
+      body {
+        margin: 0;
+      }
+      #root {
+        margin-top: auto;
+      }
+    </style>
+    <div style="margin: 0px; margin-top: auto">
+      <div id="root"></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
