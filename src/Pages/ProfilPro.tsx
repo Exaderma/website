@@ -10,8 +10,8 @@ function UserProfile() {
     const [editMode, setEditMode] = useState(false);
     const [lastName, setNom] = useState("");
     const [firstName, setPrenom] = useState("");
-    const [photo, setPhotoDeProfil] = useState("");
-    const [sexe, setSexe] = useState("");
+    // const [photo, setPhotoDeProfil] = useState("");
+    // const [sexe, setSexe] = useState("");
     const [newEmail, setAdresseMail] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setEtab] = useState("");
@@ -23,7 +23,7 @@ function UserProfile() {
         if (!token) {
             return;
         }
-        const decodedToken = jwt_decode(token);
+        const decodedToken = jwt_decode(token) as { data: { id: string } };
         const id = decodedToken.data.id;
 
         const url = "http://51.103.66.175:8080/professional/getUserProfile?id=" + id;
@@ -42,12 +42,12 @@ function UserProfile() {
         // reloadSavedData();
     }, []);
 
-    const SetUser = (data) => {
+    const SetUser = (data: any) => {
         console.log("data : ", data.firstName);
         setNom(data.firstName);
         setPrenom(data.lastName);
-        setPhotoDeProfil(data.photo);
-        setSexe(data.sexe);
+        // setPhotoDeProfil(data.photo);
+        // setSexe(data.sexe);
         setAdresseMail(data.email);
         setPhone(data.phone);
         setEtab(data.address);
@@ -125,8 +125,8 @@ function UserProfile() {
         if (savedData) {
             setNom(savedData.lastName || "");
             setPrenom(savedData.firstName || "");
-            setPhotoDeProfil(savedData.photo || "");
-            setSexe(savedData.sexe || "");
+            // setPhotoDeProfil(savedData.photo || "");
+            // setSexe(savedData.sexe || "");
             setAdresseMail(savedData.newEmail || "");
             setPhone(savedData.phone || "");
             setEtab(savedData.address || "");
@@ -192,7 +192,7 @@ function UserProfile() {
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                                setPhotoDeProfil(URL.createObjectURL(file));
+                                // setPhotoDeProfil(URL.createObjectURL(file));
                             }
                         }}
                         />
@@ -217,7 +217,7 @@ function UserProfile() {
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "1rem", marginLeft: "25%", fontSize: "1.6rem" }}>
                                 <span
                                     style={{ textDecoration: "none", color: "green", cursor: "pointer", marginRight: "1rem" }}
-                                    onClick={setPopupOpen}
+                                    onClick={() => setPopupOpen(true)}
                                 >
                                     Sauvegarder les Modifications
                                 </span>
