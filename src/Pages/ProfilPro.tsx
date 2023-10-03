@@ -127,7 +127,7 @@ function UserProfile() {
             setPrenom(savedData.firstName || "");
             // setPhotoDeProfil(savedData.photo || "");
             // setSexe(savedData.sexe || "");
-            setAdresseMail(savedData.newEmail || "");
+            setAdresseMail(savedData.email || "");
             setPhone(savedData.phone || "");
             setEtab(savedData.address || "");
             setDepartement(savedData.department || "");
