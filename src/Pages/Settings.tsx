@@ -1,12 +1,12 @@
 import Navbar from "../components/NavbarPro";
-import React, { useState } from "react";
+import { useState } from "react";
 import "../index.css";
 
 function Settings() {
 
     const [activeItem, setActiveItem] = useState("Apparence"); // État local pour suivre l'élément actif
 
-    const handleItemClick = (itemName) => {
+    const handleItemClick = (itemName:any) => {
         setActiveItem(itemName);
     };
 
