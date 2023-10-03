@@ -44,8 +44,10 @@ function LoginPagePro() {
       if (response.status === 200) {
         alert('Connected successfully');
         console.log(response.data);
+
         localStorage.setItem("USERID", response.data);
         navigate('/pro/generateLink', { state: { token: response.data } })
+
       }
     }).catch((error) => {
       if (error.response.status === 400) {
