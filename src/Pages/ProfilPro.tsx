@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/NavbarPro";
 import profilPicture from "../assets/profilPicture.png";
 import axios from "axios";
-// import jwt from 'jsonwebtoken';
+import jwt_decode from "jwt-decode";
+import Popover from "../components/Popover";
 
 function UserProfile() {
-    const [isNomEditable, setIsNomEditable] = useState(false);
-    const [isPrenomEditable, setIsPrenomEditable] = useState(false);
+    const [isPopupOpen, setPopupOpen] = useState(false);
+    const [editMode, setEditMode] = useState(false);
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
     const [photoDeProfil, setPhotoDeProfil] = useState("");
@@ -16,40 +17,138 @@ function UserProfile() {
     const [etab, setEtab] = useState("");
     const [departement, setDepartement] = useState("");
 
-    const [editMode, setEditMode] = useState(false);
-
     useEffect(() => {
-        axios
-        .get("http://51.103.66.175:8080/professional/getUserProfile", {
-            headers: {
-            Authorization: "Bearer " + localStorage.getItem("USERID"),
-            },
+        const token = localStorage.getItem("USERID");
+        if (!token) {
+            return;
+        }
+        const decodedToken = jwt_decode(token);
+        const id = decodedToken.data.id;
+
+        const url = "http://51.103.66.175:8080/professional/getUserProfile?id=" + id;
+        axios.get(url, {
+            headers: { "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            }
         })
         .then((response) => {
             console.log(response.data);
+            SetUser(response.data);
         })
         .catch((error) => {
             console.error("Erreur lors de la récupération des utilisateurs :", error);
         });
+
+        // const savedDataString = localStorage.getItem("userProfileData");
+        // const savedData = savedDataString ? JSON.parse(savedDataString) : null;
+    
+        // if (savedData) {
+        //     setNom(savedData.nom || "");
+        //     setPrenom(savedData.prenom || "");
+        //     setPhotoDeProfil(savedData.photoDeProfil || "");
+        //     setSexe(savedData.sexe || "");
+        //     setAdresseMail(savedData.adresseMail || "");
+        //     setPhone(savedData.phone || "");
+        //     setEtab(savedData.etab || "");
+        //     setDepartement(savedData.departement || "");
+        // }
     }, []);
 
-    // const setUsers = (data) => {
-    //     console.log("data : ", data.firstName);
-    //     setNom(data.firstName);
-    //     setPrenom(data.lastName);
-    //     setPhotoDeProfil(data.photo);
-    //     // setSexe(data.sexe);
-    //     setAdresseMail(data.email);
-    //     handleSaveChanges();
-    // }
+    const SetUser = (data) => {
+        console.log("data : ", data.firstName);
+        setNom(data.firstName);
+        setPrenom(data.lastName);
+        setPhotoDeProfil(data.photo);
+        setSexe(data.sexe);
+        setAdresseMail(data.email);
+        setPhone(data.phone);
+        setEtab(data.school);
+        setDepartement(data.department);
+        handleSaveChanges();
+        localStorage.setItem("userProfileData", JSON.stringify(data));
+    }
+
+
+        
+    const handleSaveChanges = () => {
+        const userProfileData = {
+            nom,
+            prenom,
+            photoDeProfil,
+            sexe,
+            adresseMail,
+            phone,
+            etab,
+            departement,
+        };
+
+        localStorage.setItem("userProfileData", JSON.stringify(userProfileData));
+        SaveInBase(userProfileData);
+    
+        setEditMode(false);
+    };
+
+    const SaveInBase = (userProfileData:any) => {
+        const token = localStorage.getItem("USERID");
+        if (!token) {
+            return;
+        }
+    
+        const updateUrls = [
+            "http://51.103.66.175:8080/updateProfile/professional/firstName",
+            "http://51.103.66.175:8080/updateProfile/professional/lastName",
+            "http://51.103.66.175:8080/updateProfile/professional/email",
+            "http://51.103.66.175:8080/updateProfile/professional/password",
+            "http://51.103.66.175:8080/updateProfile/professional/phone",
+            "http://51.103.66.175:8080/updateProfile/professional/department",
+            "http://51.103.66.175:8080/updateProfile/professional/address"
+        ];
+    
+        updateUrls.forEach(async (url, index) => {
+            try {
+                const field = Object.keys(userProfileData)[index];
+                const value = userProfileData[field];
+                await axios.put(url, {
+                    [field]: value
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + token
+                    }
+                });
+            } catch (error) {
+                console.error(`Erreur lors de la mise à jour de ${updateUrls[index]} :`, error);
+            }
+        });
+    };
+
+    const buttons = [
+        { label: "Annuler", onClick: () => setPopupOpen(false), className: "close-button" },
+        { label: "Sauvegarder", onClick: handleSaveChanges, className: "save-button" },
+    ]
+
+    const reloadSavedData = () => {
+        const savedDataString = localStorage.getItem("userProfileData");
+        const savedData = savedDataString ? JSON.parse(savedDataString) : null;
+        if (savedData) {
+            setNom(savedData.nom || "");
+            setPrenom(savedData.prenom || "");
+            setPhotoDeProfil(savedData.photoDeProfil || "");
+            setSexe(savedData.sexe || "");
+            setAdresseMail(savedData.adresseMail || "");
+            setPhone(savedData.phone || "");
+            setEtab(savedData.etab || "");
+            setDepartement(savedData.departement || "");
+        }
+    }
 
     const renderField = (label: any, value: any, stateUpdater: any) => {
         const isEditMode = editMode && stateUpdater !== undefined;
     
         return (
           <div style={{ marginBottom: "1rem" }}>
-            <label style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{label}:</label>
-            {isEditMode ? (
+            <label style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{label}:</label>
+            {isEditMode ? 
               <div style={{ display: "flex", alignItems: "center" }}>
                 <input
                   type="text"
@@ -57,8 +156,7 @@ function UserProfile() {
                   onChange={(e) => stateUpdater(e.target.value)}
                   style={{
                     width: "100%",
-                    fontSize: "1.3rem",
-                    padding: "0.5rem",
+                    fontSize: "1rem",
                     border: "1px solid #ccc",
                     borderRadius: "4px",
                   }}
@@ -75,85 +173,14 @@ function UserProfile() {
                   Supprimer
                 </span>
               </div>
-            ) : (
-              <span
-                style={{
-                  fontSize: "1.3rem",
-                  marginLeft: "1rem",
-                  color: "#333",
-                }}
-              >
-                {value}
-                {stateUpdater && (
-                  <span
-                    style={{
-                      textDecoration: "none",
-                      color: "blue",
-                      cursor: "pointer",
-                      marginLeft: "3rem",
-                    }}
-                    onClick={() => setEditMode(true)}
-                  >
-                    Modifier
-                  </span>
-                )}
-              </span>
-            )}
+            : <span style={{ fontSize: "1.3rem", marginLeft: "1rem" }}>{value}</span>}
           </div>
         );
       };
-
-    useEffect(() => {
-        const savedDataString = localStorage.getItem("userProfileData");
-        const savedData = savedDataString ? JSON.parse(savedDataString) : null;
-    
-        if (savedData) {
-            setNom(savedData.nom || "");
-            setPrenom(savedData.prenom || "");
-            setPhotoDeProfil(savedData.photoDeProfil || "");
-            setSexe(savedData.sexe || "");
-            setAdresseMail(savedData.adresseMail || "");
-            setPhone(savedData.phone || "");
-            setEtab(savedData.etab || "");
-            setDepartement(savedData.departement || "");
-        }
-        }, []);
-        
-        const handleSaveChanges = () => {
-            const userProfileData = {
-                nom,
-                prenom,
-                photoDeProfil,
-                sexe,
-                adresseMail,
-                phone,
-                etab,
-                departement,
-            };
-    
-            localStorage.setItem("userProfileData", JSON.stringify(userProfileData));
-        
-            setEditMode(false);
-        };
-
-        const reloadSavedData = () => {
-            const savedDataString = localStorage.getItem("userProfileData");
-            const savedData = savedDataString ? JSON.parse(savedDataString) : null;
-
-            if (savedData) {
-                setNom(savedData.nom || "");
-                setPrenom(savedData.prenom || "");
-                setPhotoDeProfil(savedData.photoDeProfil || "");
-                setSexe(savedData.sexe || "");
-                setAdresseMail(savedData.adresseMail || "");
-                setPhone(savedData.phone || "");
-                setEtab(savedData.etab || "");
-                setDepartement(savedData.departement || "");
-            }
-        }
     
     return (
         <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "100%", padding: "0", margin: "0" }}>
+            <Popover isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} message="Voulez-vous sauvegarder les modifications ?" buttons={buttons} isCloseButtonVisible={false}  />
             <Navbar />
             <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
@@ -180,73 +207,8 @@ function UserProfile() {
                     ) : null}
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.5rem" }}>
-                        {isNomEditable ? (
-                            <div className="editable-field" style={{ top: "100px", left: "50px" }}>
-                            <input
-                                type="text"
-                                value={nom}
-                                onChange={(e) => setNom(e.target.value)}
-                            />
-                            <span
-                                style={{
-                                    textDecoration: "none",
-                                    color: "green",
-                                    cursor: "pointer",
-                                    marginLeft: "3rem",
-                                }}onClick={() => setIsNomEditable(false)}>Sauvegarder</span>
-                            </div>
-                        ) : (
-                            <div>
-                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                    <div style={{ marginRight: "1rem", fontSize: "1.5rem", fontWeight: "bold" }}>
-                                        Nom:
-                                    </div>
-                                    <span>{nom}</span>
-                                    <span
-                                        style={{
-                                            textDecoration: "none",
-                                            color: "blue",
-                                            cursor: "pointer",
-                                            marginLeft: "6rem",
-                                            fontSize: "1.3rem"
-                                        }}onClick={() => setIsNomEditable(true)}>Modifier
-                                    </span>
-                                </div>
-                            </div>
-                        )}
-                        {isPrenomEditable ? (
-                            <div className="editable-field" style={{ top: "150px", left: "50px" }}>
-                            <input
-                                type="text"
-                                value={prenom}
-                                onChange={(e) => setPrenom(e.target.value)}
-                            />
-                            <span
-                                style={{
-                                    textDecoration: "none",
-                                    color: "green",
-                                    cursor: "pointer",
-                                    marginLeft: "3rem",
-                                }}onClick={() => setIsPrenomEditable(false)}>Sauvegarder</span>
-                            </div>
-                        ) : (
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                <div style={{ marginRight: "1rem", fontSize: "1.5rem", fontWeight: "bold" }}>
-                                    Prénom:
-                                </div>
-                                <span>{prenom}</span>
-                                <span
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "blue",
-                                        cursor: "pointer",
-                                        marginLeft: "3rem",
-                                        fontSize: "1.3rem"
-                                    }}onClick={() => setIsPrenomEditable(true)}>
-                                    Modifier
-                                </span>
-                            </div>
-                        )}
+                        {renderField("Nom", nom, setNom)}
+                        {renderField("Prénom", prenom, setPrenom)}
                     </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "100%" }}>
@@ -263,7 +225,7 @@ function UserProfile() {
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "1rem", marginLeft: "25%", fontSize: "1.6rem" }}>
                                 <span
                                     style={{ textDecoration: "none", color: "green", cursor: "pointer", marginRight: "1rem" }}
-                                    onClick={handleSaveChanges}
+                                    onClick={setPopupOpen}
                                 >
                                     Sauvegarder les Modifications
                                 </span>
@@ -284,6 +246,7 @@ function UserProfile() {
                         </div>
                     </div>
                 </div>
+                <div style={{ display: "flex", flexDirection: "row"}}>
                 <a
                 href="#"
                 style={{
@@ -298,9 +261,26 @@ function UserProfile() {
                     display: "block",
                     marginBottom: "5%",
                 }}
+                onClick={() => {
+                    localStorage.removeItem("USERID");
+                    window.location.href = "/";
+                }}
                 >
                     Se Déconnecter
                 </a>
+                <span
+                    style={{
+                    textDecoration: "none",
+                    color: "blue",
+                    cursor: "pointer",
+                    marginRight: "10%",
+                    fontSize: "1.3rem",
+                    }}
+                    onClick={() => setEditMode(true)}
+                >
+                    Modifier
+                </span>
+                </div>
             </div>
         </div>
         );
