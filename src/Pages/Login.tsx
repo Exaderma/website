@@ -35,7 +35,7 @@ function LoginPage() {
       alert('Please fill all the fields');
       return;
     }
-    axios.post('http://176.141.147.142/patient/login',
+    axios.post('http://51.103.66.175:8080/patient/login',
       {
         email: formValues.email,
         password: formValues.password

@@ -42,7 +42,7 @@ function RegisterPage() {
       alert('Passwords do not match');
       return;
     }
-    axios.post('http://176.141.147.142/patient/register', {
+    axios.post('http://51.103.66.175:8080/patient/register', {
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email,
@@ -55,13 +55,13 @@ function RegisterPage() {
       }
     }).catch((error) => {
       console.log(error);
-      if (error.response.status === 400) {
+      if (error.response?.status === 400) {
         alert('Invalid email');
       }
-      if (error.response.status === 409) {
+      if (error.response?.status === 409) {
         alert('Email already in use');
       }
-      if (error.response.status === 500) {
+      if (error.response?.status === 500) {
         alert('Server error');
       }
     });

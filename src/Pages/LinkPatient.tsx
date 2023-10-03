@@ -17,6 +17,7 @@ const initialFormValues: FormValues = {
 
 function LinkPatient() {
   const navigate = useNavigate()
+  // const [medecin, setMedecin] = useState<any>();
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const data = useLocation();
   let token: any = data.state as any;
@@ -42,7 +43,7 @@ function LinkPatient() {
       alert('Please give a code');
       return;
     }
-    axios.post('http://176.141.147.142/patient/link', {
+    axios.post('http://51.103.66.175:8080/patient/link', {
       code : formValues.code
     }, {
       headers: {
@@ -51,7 +52,8 @@ function LinkPatient() {
       }).then((response) => {
         if (response.status === 201) {
           alert('Patient linked successfully');
-          navigate('/login', { state: { token: token.token } })
+          // setMedecin(response.data);
+          console.log(response.data);
         }
       }).catch((error) => {
         if (error.response.status === 400) {
@@ -103,6 +105,9 @@ function LinkPatient() {
             <input className='form' type="code" name="code" value={formValues.code} placeholder="Saisir le Code" style={{ marginTop: "2vh", width: "20vw" }} onChange={handleInputChange} />
           </label>
           <div style={{ marginTop: "1vw", marginLeft: "auto", display: "block", textAlign: "center" }}>
+            <label>
+              {/* {medecin ? `Votre médecin est ${medecin}` : null} */}
+            </label>
             <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Valider</button>
           </div>
         </form>

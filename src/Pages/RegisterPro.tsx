@@ -42,14 +42,14 @@ function RegisterPagePro() {
       alert('Passwords do not match');
       return;
     }
-    axios.post('http://176.141.147.142/professional/register', {
+    axios.post('http://51.103.66.175:8080/professional/register', {
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email,
       password: formValues.password
     }).then((response) => {
       console.log(response);
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert('Account created successfully');
         navigate('/pro/login')
       }
