@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Popover from "../components/Popover";
 import Navbar from "../components/NavbarPro";
 import Profil from "../assets/profil.svg";
 import Search from "../assets/search.svg";
@@ -11,7 +10,6 @@ import chat from "../assets/chat.png";
 
 function Homepro() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -32,23 +30,11 @@ function Homepro() {
 
     }, []);
 
-    const [isPopupOpen, setPopupOpen] = useState(false);
-
-    const togglePopup = () => {
-        setPopupOpen(!isPopupOpen);
-    };
-
     const handleSearch = () => {
         console.log("Recherche pour :", searchTerm);
     };
 
-    const toggleNavbar = () => {
-        setIsNavbarOpen((prev) => !prev);
-    };
-
-    const contentWidth = isNavbarOpen ? "80%" : "100%";
-
-    const filteredUsers = users.filter((user) => {
+    const filteredUsers = users.filter((user: any) => {
         const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
         const searchTermLower = searchTerm.toLowerCase();
         return fullName.includes(searchTermLower);
@@ -56,8 +42,8 @@ function Homepro() {
 
     return (
         <div style={{display: "flex", flexDirection: "row", width: "100%", height: "100%", padding: "0", margin: "0"}}>
-            <Navbar isNavbarOpen={isNavbarOpen} toggleNavbar={toggleNavbar} />
-            <div style={{display: "flex", flexDirection: "column", width: contentWidth }}>
+            <Navbar/>
+            <div style={{display: "flex", flexDirection: "column", width: "80%" }}>
                 {/* <div className="App">
                     <button onClick={togglePopup}>Ouvrir la pop-up</button>
                     <Popover isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} message="J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/J'ai un message long pour voir la capacité d'affichage de cette popup/" />
@@ -84,7 +70,7 @@ function Homepro() {
                 </div>
                 <div className="patient-list-container" style={{display: "flex", flexDirection: "row", width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", justifyContent: "space-between"}}>
                     <ul style={{display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", justifyContent: "space-between", gap: "5%"}}>
-                        {filteredUsers.map((user) => (
+                        {filteredUsers.map((user: any) => (
                         <li key={user.id} style={{listStyle: "none"}}>
                             <Card width="10vw" height="fit-content">
                                 <img src={profilPicture} alt="profil" style={{width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", display: "block"}} />

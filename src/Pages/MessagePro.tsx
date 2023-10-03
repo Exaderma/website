@@ -1,6 +1,5 @@
 import Navbar from "../components/NavbarPro";
 import "../App.css"
-import Profil from "../assets/profil.svg"
 
 function MessagePro() {
     return (
