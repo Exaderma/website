@@ -50,7 +50,7 @@ function HomePatient() {
           </button>
           <div className="ProfileButton"></div>
           { doctors.map((doctor) => (
-            <div className="DoctorCard">
+            <div className="DoctorCard" key={doctor.id}>
               <div className="ProfileCard" />
               <div className="DoctorName">
                 Dr. {doctor.Name} {doctor.FirstName[0]}.

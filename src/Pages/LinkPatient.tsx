@@ -108,7 +108,7 @@ function LinkPatient() {
             <label>
               {/* {medecin ? `Votre médecin est ${medecin}` : null} */}
             </label>
-            <button type="submit" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Valider</button>
+            <button type="submit" data-testid="submit-button" style={{ width: "85%", height: "3vw", backgroundColor: "#0F6FFFB2", color: "#FFFFFF", borderRadius: "0.5vw", border: "none" }}>Valider</button>
           </div>
         </form>
       </Card>

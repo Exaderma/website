@@ -14,7 +14,7 @@ function GenerateLinkPro() {
   let token: any = data.state as any;
 
   useEffect(() => {
-    if (!token.token) {
+    if (!token || !token.token) {
       navigate('/login')
     }
   }, [token, navigate])
