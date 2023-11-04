@@ -15,7 +15,7 @@ function Homepro() {
     useEffect(() => {
         console.log("Le useEffect() est appelé.");
         axios
-        .get("http://51.103.66.175:8080/professional/getLink", {
+        .get(import.meta.env.VITE_URL + "/professional/getLink", {
             headers: {
             Authorization: "Bearer " + localStorage.getItem("USERID"),
             },

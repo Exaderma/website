@@ -26,7 +26,7 @@ function UserProfile() {
         const decodedToken = jwt_decode(token) as { data: { id: string } };
         const id = decodedToken.data.id;
 
-        const url = "http://51.103.66.175:8080/professional/getUserProfile?id=" + id;
+        const url = import.meta.env.VITE_URL + "/professional/getUserProfile?id=" + id;
         axios.get(url, {
             headers: { "Content-Type": "application/json",
                 Authorization: "Bearer " + token
@@ -43,9 +43,8 @@ function UserProfile() {
     }, []);
 
     const SetUser = (data: any) => {
-        console.log("data : ", data.firstName);
-        setNom(data.firstName);
-        setPrenom(data.lastName);
+        setPrenom(data.firstName);
+        setNom(data.lastName);
         // setPhotoDeProfil(data.photo);
         // setSexe(data.sexe);
         setAdresseMail(data.email);
@@ -85,12 +84,12 @@ function UserProfile() {
         console.log("SaveInBase");
     
         const updateUrls = [
-            "http://51.103.66.175:8080/updateProfile/professional/firstName",
-            "http://51.103.66.175:8080/updateProfile/professional/lastName",
-            "http://51.103.66.175:8080/updateProfile/professional/email",
-            "http://51.103.66.175:8080/updateProfile/professional/phone",
-            "http://51.103.66.175:8080/updateProfile/professional/department",
-            "http://51.103.66.175:8080/updateProfile/professional/address"
+            import.meta.env.VITE_URL + "/updateProfile/professional/firstName",
+            import.meta.env.VITE_URL + "/updateProfile/professional/lastName",
+            import.meta.env.VITE_URL + "/updateProfile/professional/email",
+            import.meta.env.VITE_URL + "/updateProfile/professional/phone",
+            import.meta.env.VITE_URL + "/updateProfile/professional/department",
+            import.meta.env.VITE_URL + "/updateProfile/professional/address"
         ];
     
         updateUrls.forEach(async (url, index) => {
@@ -100,13 +99,16 @@ function UserProfile() {
             try {
                 const field = Object.keys(userProfileData)[index];
                 const value = userProfileData[field];
-                await axios.post(url, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token
-                    }
-                }, { [field]: value
-                });
+                const requestBody = {
+                    [field]: value
+                };
+                console.log("requestBody : ", requestBody);
+            //     await axios.post(url, requestBody, {
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //             Authorization: "Bearer " + token
+            //         }
+            //     });
             } catch (error) {
                 console.log("field : ", Object.keys(userProfileData)[index]);
                 console.error(`Erreur lors de la mise à jour de ${updateUrls[index]} :`, error);

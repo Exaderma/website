@@ -36,7 +36,7 @@ function LoginPage() {
       alert('Please fill all the fields');
       return;
     }
-    axios.post('http://51.103.66.175:8080/patient/login',
+    axios.post(import.meta.env.VITE_URL + '/patient/login',
       {
         email: formValues.email,
         password: formValues.password

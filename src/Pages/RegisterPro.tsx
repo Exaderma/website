@@ -43,7 +43,7 @@ function RegisterPagePro() {
       alert('Passwords do not match');
       return;
     }
-    axios.post('http://51.103.66.175:8080/professional/register', {
+    axios.post(import.meta.env.VITE_URL + '/professional/register', {
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       email: formValues.email,

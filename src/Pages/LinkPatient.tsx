@@ -43,7 +43,7 @@ function LinkPatient() {
       alert('Please give a code');
       return;
     }
-    axios.post('http://51.103.66.175:8080/patient/link', {
+    axios.post(import.meta.env.VITE_URL + '/patient/link', {
       code : formValues.code
     }, {
       headers: {

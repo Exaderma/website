@@ -35,7 +35,7 @@ function LoginPagePro() {
       alert('Please fill all the fields');
       return;
     }
-    axios.post('http://51.103.66.175:8080/professional/login',
+    axios.post(import.meta.env.VITE_URL + '/professional/login',
       {
         email: formValues.email,
         password: formValues.password

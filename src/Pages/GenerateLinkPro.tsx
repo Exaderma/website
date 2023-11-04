@@ -23,7 +23,7 @@ function GenerateLinkPro() {
     event.preventDefault();
     console.log("TOKEN IS :", token.token);
     console.log(email);
-    axios.post('http://51.103.66.175:8080/professional/link',{
+    axios.post(import.meta.env.VITE_URL + '/professional/link',{
       email : email
     }, {
       headers: {
