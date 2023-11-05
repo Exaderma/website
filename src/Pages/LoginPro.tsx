@@ -48,7 +48,7 @@ function LoginPagePro() {
         navigate('/pro/home', { state: { token: response.data.token } })
       }
     }).catch((error) => {
-      if (error.response.status === 400) {
+      if (error.response.status === 401) {
         alert('Invalid logs');
       }
       if (error.response.status === 500) {
