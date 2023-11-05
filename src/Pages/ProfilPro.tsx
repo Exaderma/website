@@ -103,12 +103,12 @@ function UserProfile() {
                     [field]: value
                 };
                 console.log("requestBody : ", requestBody);
-            //     await axios.post(url, requestBody, {
-            //         headers: {
-            //             "Content-Type": "application/json",
-            //             Authorization: "Bearer " + token
-            //         }
-            //     });
+                await axios.post(url, requestBody, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + token
+                    }
+                });
             } catch (error) {
                 console.log("field : ", Object.keys(userProfileData)[index]);
                 console.error(`Erreur lors de la mise à jour de ${updateUrls[index]} :`, error);
