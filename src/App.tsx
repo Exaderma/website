@@ -12,6 +12,7 @@ import Settings from './Pages/Settings'
 import ProfilPro from './Pages/ProfilPro'
 import GalleryPro from './Pages/GalleryPro'
 import MessagePro from './Pages/MessagePro'
+import RecordPatientPro from './Pages/RecordPatientPro'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/pro/galerie' element={<GalleryPro />} />
           <Route path='/pro/message' element={<MessagePro />} />
           <Route path='/settings' element={<Settings />} />
+          <Route path='/pro/record' element={<RecordPatientPro />} />
           <Route path='*' element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
