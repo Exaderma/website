@@ -104,3 +104,34 @@
   text-align: center;
   margin-top: 50px;
 }
+
+/* .GalleryPro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+} */
+
+/* .GalleryPro img {
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+} */
+
+.GalleryPro-folders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+/* #light {
+  background-color: rgb(255, 255, 255);
+}
+
+#dark {
+  background-color: rgb(124, 124, 171);
+} */

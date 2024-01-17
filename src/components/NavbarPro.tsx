@@ -8,8 +8,10 @@ import message from "../assets/message.png";
 import galerie from "../assets/galerie.svg";
 import logo from "../assets/logo.png";
 import "./Navbar.css";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [navbarOpen, setNavbarOpen] = useState(true);
 
@@ -42,7 +44,7 @@ const Navbar = () => {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <img src={home} alt="home" style={{ width: "10%", height: "10%", paddingRight: "10%" }} />
                   <Link to="/pro/home" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
-                    Accueil
+                    {t("translation:menu.home")}
                   </Link>
                 </div>
               </li>
@@ -50,7 +52,7 @@ const Navbar = () => {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <img src={message} alt="message" style={{ width: "10%", height: "10%", paddingRight: "10%" }} />
                   <Link to="/pro/message" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
-                    Messages
+                  {t("translation:menu.messages")}
                   </Link>
                 </div>
               </li>
@@ -58,15 +60,15 @@ const Navbar = () => {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <img src={profil} alt="profil" style={{ width: "10%", height: "10%", paddingRight: "10%" }} />
                   <Link to="/pro/profil" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
-                    Mon Profil
+                    {t("translation:menu.profile")}
                   </Link>
                 </div>
               </li>
-              <li className={`nav-item ${location.pathname === "/pro/galerie" ? "active" : ""}`} style={{ marginRight: "10%", paddingTop: "5%", paddingBottom: "5%", paddingLeft: "10%" }}>
+              <li className={`nav-item ${location.pathname === "/pro/gallery" ? "active" : ""}`} style={{ marginRight: "10%", paddingTop: "5%", paddingBottom: "5%", paddingLeft: "10%" }}>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <img src={galerie} alt="galerie" style={{ width: "10%", height: "10%", paddingRight: "10%" }} />
-                  <Link to="/pro/galerie" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
-                    Galerie
+                  <Link to="/pro/gallery" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
+                    {t("translation:menu.gallery")}
                   </Link>
                 </div>
               </li>
@@ -75,7 +77,7 @@ const Navbar = () => {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <img src={setting} alt="setting" style={{ width: "10%", height: "10%", paddingRight: "10%" }} />
                   <Link to="/settings" style={{ color: "#FFFFFF", fontSize: "1.5rem", textDecoration: "none" }}>
-                    Paramètres
+                    {t("translation:menu.settings")}
                   </Link>
                 </div>
               </li>
