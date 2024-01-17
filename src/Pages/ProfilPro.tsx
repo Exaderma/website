@@ -5,12 +5,17 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import Popover from "../components/Popover";
 
+import "../langage";
+import { useTranslation } from "react-i18next";
+
 function UserProfile() {
+    const { t } = useTranslation();
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const [editPP, setEditPP] = useState(false);
     const [lastName, setNom] = useState("");
     const [firstName, setPrenom] = useState("");
-    // const [photo, setPhotoDeProfil] = useState("");
+    const [photo, setPhotoDeProfil] = useState("");
     // const [sexe, setSexe] = useState("");
     const [newEmail, setAdresseMail] = useState("");
     const [phone, setPhone] = useState("");
@@ -25,6 +30,28 @@ function UserProfile() {
         }
         const decodedToken = jwt_decode(token) as { data: { id: string } };
         const id = decodedToken.data.id;
+
+        axios.post(import.meta.env.VITE_URL + "/image/getProfile/professional", {}, {
+            headers: { "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+            const binaryString = window.atob(response.data);
+            const binaryLen = binaryString.length;
+            const bytes = new Uint8Array(binaryLen);
+            for (let i = 0; i < binaryLen; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const blob = new Blob([bytes], { type: "image/png" });
+            const url = URL.createObjectURL(blob);
+            console.log(url);
+            setPhotoDeProfil(url);
+        })
+        .catch((error) => {
+            console.error("Erreur lors de la récupération des utilisateurs :", error);
+        });
 
         const url = import.meta.env.VITE_URL + "/professional/getUserProfile?id=" + id;
         axios.get(url, {
@@ -45,7 +72,6 @@ function UserProfile() {
     const SetUser = (data: any) => {
         setPrenom(data.firstName);
         setNom(data.lastName);
-        // setPhotoDeProfil(data.photo);
         // setSexe(data.sexe);
         setAdresseMail(data.email);
         setPhone(data.phone);
@@ -54,8 +80,6 @@ function UserProfile() {
         handleSaveChanges(true);
         localStorage.setItem("userProfileData", JSON.stringify(data));
     }
-
-
         
     const handleSaveChanges = (onLoad:boolean) => {
         setPopupOpen(false);
@@ -164,13 +188,49 @@ function UserProfile() {
                   }}
                   onClick={() => stateUpdater("")}
                 >
-                  Supprimer
+                  {t("translation:profilEdit.supress")}
                 </span>
               </div>
             : <span style={{ fontSize: "1.3rem", marginLeft: "1rem" }}>{value}</span>}
           </div>
         );
-      };
+    };
+
+    const changeImage = () => {
+        const token = localStorage.getItem("USERID");
+        if (!token) {
+            return;
+        }
+
+        const base64Image = photo.split(",")[1];
+
+        const requestBody = {
+            data: base64Image,
+        };
+
+        console.log("requestBody : ", requestBody);
+        axios.post(import.meta.env.VITE_URL + "/image/setProfile/professional", requestBody, {
+            headers: { "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error("Erreur lors de la récupération des utilisateurs :", error);
+        });
+    };
+
+    const handleImageClick = () => {
+        if (!editMode) {
+            setEditPP(true);
+        }
+        if (editPP) {
+            setEditPP(false);
+            changeImage();
+        }
+    };
     
     return (
         <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "100%", padding: "0", margin: "0" }}>
@@ -178,31 +238,46 @@ function UserProfile() {
             <Navbar />
             <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-                    <h1 style={{ color: "#000000", fontSize: "4rem", paddingLeft: "10%" }}>Votre Profil</h1>
+                    <h1 style={{ color: "#000000", fontSize: "4rem", paddingLeft: "10%" }}>
+                        {t("translation:profil.pageTitle")}
+                    </h1>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", width: "70%", height: "25%", marginLeft: "10%", marginRight: "auto" }}>
                     <div style={{ display: "flex", flexDirection: "column"}}>
                     <img
-                    src={profilPicture || "placeholder.jpg"}
-                    alt="Photo de Profil"
-                    style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+                        src={photo || profilPicture}
+                        alt="Photo de profil"
+                        style={{
+                        width: "100px",
+                        height: "100px",
+                        display: "block",
+                        marginTop: "2%",
+                        cursor: "pointer",
+                        borderRadius: "50%",
+                        }}
+                        onClick={handleImageClick}
                     />
-                    {editMode ? (
+                    {editPP ? (
                         <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                                // setPhotoDeProfil(URL.createObjectURL(file));
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    const base64 = e.target?.result;
+                                    setPhotoDeProfil(base64 as string);
+                                };
+                                reader.readAsDataURL(file);
                             }
                         }}
                         />
                     ) : null}
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.5rem" }}>
-                        {renderField("Nom", lastName, setNom)}
-                        {renderField("Prénom", firstName, setPrenom)}
+                        {renderField(t("translation:profil.name"), lastName, setNom)}
+                        {renderField(t("translation:profil.firstName"), firstName, setPrenom)}
                     </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "100%" }}>
@@ -210,8 +285,8 @@ function UserProfile() {
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", marginLeft: "5%", fontSize: "1.3rem", justifyItems: "center" }}>
-                            {renderField("Adresse Email", newEmail, setAdresseMail)}
-                            {renderField("Téléphone", phone, setPhone)}
+                            {renderField(t("translation:profil.email"), newEmail, setAdresseMail)}
+                            {renderField(t("translation:profil.phoneNumber"), phone, setPhone)}
                             {/* {renderField("Sexe", sexe, setSexe)} */}
                         </div>
             
@@ -221,22 +296,22 @@ function UserProfile() {
                                     style={{ textDecoration: "none", color: "green", cursor: "pointer", marginRight: "1rem" }}
                                     onClick={() => setPopupOpen(true)}
                                 >
-                                    Sauvegarder les Modifications
+                                    {t("translation:profilEdit.save")}
                                 </span>
                                 <span
                                     style={{ textDecoration: "none", color: "gray", cursor: "pointer" }}
                                     onClick={() => {setEditMode(false); reloadSavedData()}}
 
                                 >
-                                    Annuler
+                                    {t("translation:profilEdit.cancel")}
                                 </span>
                             </div>
                         )}
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", width: "50%", height: "50%", marginLeft: "5%", marginTop: "5%" }}>
                         <div style={{ display: "flex", flexDirection: "column"}}>
-                            {renderField("Etablissement", address, setEtab)}
-                            {renderField("Département", department, setDepartement)}
+                            {renderField(t("translation:profil.establishment"), address, setEtab)}
+                            {renderField(t("translation:profil.department"), department, setDepartement)}
                         </div>
                     </div>
                 </div>
@@ -260,7 +335,7 @@ function UserProfile() {
                     window.location.href = "/pro/login";
                 }}
                 >
-                    Se Déconnecter
+                    {t("translation:profil.disconnect")}
                 </a>
                 <span
                     style={{
@@ -272,7 +347,7 @@ function UserProfile() {
                     }}
                     onClick={() => setEditMode(true)}
                 >
-                    Modifier
+                    {t("translation:profil.modify")}
                 </span>
                 </div>
             </div>

@@ -1,0 +1,61 @@
+{
+    "menu": {
+      "home": "Home",
+      "messages": "Messages",
+      "profile": "My Profile",
+      "gallery": "Gallery",
+      "settings": "Settings"
+    },
+    "settings": {
+      "pageTitle": "Settings Page",
+      "language": "Language",
+      "appearance": "Appearance",
+      "security": "Security and Privacy",
+      "support": "Help and Support",
+      "about": "About"
+    },
+    "languageSettings": {
+      "sectionTitle": "Language",
+      "appLanguage": "Application Language",
+      "french": "French",
+      "english": "English"
+    },
+    "appearanceSettings": {
+      "sectionTitle": "Appearance",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode"
+    },
+    "securitySettings": {
+      "sectionTitle": "Security and Privacy"
+    },
+    "helpSupport": {
+      "sectionTitle": "Help and Support"
+    },
+    "about": {
+      "sectionTitle": "About"
+    },
+    "profil": {
+      "pageTitle": "My Profile",
+      "name": "Name",
+      "firstName": "First Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "establishment": "Establishment",
+      "department": "Department",
+      "disconnect": "Disconnect",
+      "accountsupress": "Delete my account",
+      "modify": "Edit"
+    },
+    "profilEdit": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "supress": "Delete",
+      "ppFile": "No file selected",
+      "ppChoose": "Choose a file"
+    },
+    "gallery": {
+      "empty": "The patient has no image in his folder at the moment, please contact him to add some.",
+      "folder": "Folder"
+    }
+}

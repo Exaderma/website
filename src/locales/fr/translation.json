@@ -1,0 +1,61 @@
+{
+    "menu": {
+      "home": "Accueil",
+      "messages": "Messages",
+      "profile": "Mon Profil",
+      "gallery": "Galerie",
+      "settings": "Paramètres"
+    },
+    "settings": {
+      "pageTitle": "Page de paramètres",
+      "language": "Langue",
+      "appearance": "Apparence",
+      "security": "Sécurité et vie privée",
+      "support": "Aide et support",
+      "about": "À propos"
+    },
+    "languageSettings": {
+      "sectionTitle": "Langue",
+      "appLanguage": "Langue de l'application",
+      "french": "Français",
+      "english": "Anglais"
+    },
+    "appearanceSettings": {
+      "sectionTitle": "Apparence",
+      "darkMode": "Mode sombre",
+      "lightMode": "Mode clair"
+    },
+    "securitySettings": {
+      "sectionTitle": "Sécurité et vie privée"
+    },
+    "helpSupport": {
+      "sectionTitle": "Aide et support"
+    },
+    "about": {
+      "sectionTitle": "À propos"
+    },
+    "profil": {
+      "pageTitle": "Mon Profil",
+      "name": "Nom",
+      "firstName": "Prénom",
+      "email": "Adresse Email",
+      "phoneNumber": "Téléphone",
+      "establishment": "Établissement",
+      "department": "Département",
+      "disconnect": "Déconnexion",
+      "accountsupress": "Supprimer mon compte",
+      "modify": "Modifier"
+    },
+    "profilEdit": {
+      "edit": "Modifier",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "supress": "Supprimer",
+      "ppFile": "Aucun fichier choisi",
+      "ppChoose": "Choisir un fichier"
+    },
+    "gallery": {
+      "empty": "Le patient n'a pas d'image dans son dossier pour le moment, veuillez communiquer avec lui pour en ajouter.",
+      "folder": "Dossier"
+    }
+}
