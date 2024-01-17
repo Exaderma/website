@@ -11,15 +11,11 @@ import "../langage";
 import { useTranslation } from "react-i18next";
 
 interface Folder {
-  id: number;
-  name: string;
-  content: {};
+    id: number;
+    firstName: string;
+    lastName: string;
+    content: {};
 }
-
-// const folders: Folder[] = [
-//   { id: 1, name: "Patient 1", content: {id: 1, name: "Image 1", content: "Contenu de l'image 1"} },
-//   { id: 2, name: "Patient 2", content: {id: 1, name: "Image 1", content: "Contenu de l'image 1"} },
-// ];
 
 const handleFolderClick = (folder: Folder) => {
     localStorage.setItem("folder", JSON.stringify(folder));
@@ -27,7 +23,7 @@ const handleFolderClick = (folder: Folder) => {
 
 const Gallery: React.FC = () => {
     const { t } = useTranslation();
-    const [folders, setFolders] = useState([]);
+    const [folders, setFolders] = useState<Folder[]>([]);
 
     useEffect(() => {
         console.log("Le useEffect() est appelé.");
