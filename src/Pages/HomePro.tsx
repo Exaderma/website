@@ -40,6 +40,60 @@ function Homepro() {
         return fullName.includes(searchTermLower);
     });
 
+    const clickCard = async (email: any) => {
+        console.log("email : ", email);
+        try {
+            const response = await fetch(import.meta.env.VITE_URL + "/record/new", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + localStorage.getItem("USERID"),
+              },
+              body: JSON.stringify({
+                patientEmail: email,
+                description: "Ma description",
+                type: "Type de consultation",
+              }),
+            });
+      
+            if (!response.ok) {
+              throw new Error(`Erreur de réseau: ${response.statusText}`);
+            }
+      
+            const data = await response.text();
+            console.log('Données obtenues avec succès:', data);
+            doGetRecord(email);
+          } catch (error) {
+            console.error('Erreur lors de la récupération des données:', error);
+          }
+    };
+
+    const doGetRecord = async (email: any) => {
+        try {
+            const response = await fetch(import.meta.env.VITE_URL + "/record/get", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + localStorage.getItem("USERID"),
+              },
+              body: JSON.stringify({
+                patientEmail: email,
+              }),
+            });
+      
+            if (!response.ok) {
+              throw new Error(`Erreur de réseau: ${response.statusText}`);
+            }
+      
+            const data = await response.text();
+            console.log('Données obtenues avec succès:', data);
+            const encodedMail = btoa(email);
+            window.location.href = `/pro/record#${encodeURIComponent(encodedMail)}`;
+          } catch (error) {
+            console.error('Erreur lors de la récupération des données:', error);
+          }
+    };
+
     return (
         <div style={{display: "flex", flexDirection: "row", width: "100%", height: "100%", padding: "0", margin: "0"}}>
             <Navbar/>
@@ -72,7 +126,7 @@ function Homepro() {
                     <ul style={{display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", justifyContent: "space-between", gap: "5%"}}>
                         {filteredUsers.map((user: any) => (
                         <li key={user.id} style={{listStyle: "none"}}>
-                            <Card width="10vw" height="fit-content">
+                            <Card width="10vw" height="fit-content" onClick={() => doGetRecord(user.email)}>
                                 <img src={profilPicture} alt="profil" style={{width: "100%", height: "100%", marginLeft: "auto", marginRight: "auto", display: "block"}} />
                                 <div style={{display: "flex", flexDirection: "column", width: "100%", height: "100%", marginLeft: "auto",  marginRight: "auto"}}>
                                     <h1 style={{color: "#000000", fontSize: "2rem", paddingLeft: "10%",}}>

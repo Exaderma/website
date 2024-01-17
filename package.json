@@ -11,13 +11,12 @@
     "test": "jest --config jest.config.mjs --coverage tests/"
   },
   "dependencies": {
-    "@esbuild/linux-x64": "^0.19.4",
     "axios": "^1.4.0",
+
     "i18next": "^23.7.8",
     "i18next-browser-languagedetector": "^7.2.0",
 
     "esbuild-linux-64": "^0.15.18",
-
     "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",

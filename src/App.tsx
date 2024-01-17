@@ -12,10 +12,14 @@ import Settings from './Pages/Settings'
 import ProfilPro from './Pages/ProfilPro'
 import GalleryPro from './Pages/GalleryPro'
 import MessagePro from './Pages/MessagePro'
+
+import RecordPatientPro from './Pages/RecordPatientPro'
+
 import FolderComponent from './components/Folder'
 import { createContext, useState } from "react";
 
 export const ThemeContext = createContext("light");
+
 
 function App() {
   const saveTheme = localStorage.getItem("theme") || "light";
@@ -42,6 +46,7 @@ function App() {
             <Route path='/pro/message' element={<MessagePro />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/pro/*' element={<LoginPagePro />} />
+            <Route path='/pro/record' element={<RecordPatientPro />} />
             <Route path='/' element={<LoginPage />} />
             <Route path='*' element={<LoginPage />} />
           </Routes>
