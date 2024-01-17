@@ -1,0 +1,63 @@
+{
+  "fr": {
+    "test": "Ceci est un test",
+    "menu": {
+      "home": "Accueil",
+      "messages": "Messages",
+      "profile": "Mon Profil",
+      "gallery": "Galerie",
+      "settings": "Paramètres"
+    },
+    "settingsPage": {
+      "pageTitle": "Page de paramètres",
+      "language": "Langue",
+      "appearance": "Apparence",
+      "securityPrivacy": "Sécurité et vie privée"
+    },
+    "languageSettings": {
+      "sectionTitle": "Langue",
+      "appLanguage": "Langue de l'application",
+      "french": "Français",
+      "english": "Anglais"
+    },
+    "securitySettings": {
+      "sectionTitle": "Sécurité et vie privée"
+    },
+    "helpSupport": {
+      "sectionTitle": "Aide et support"
+    },
+    "about": {
+      "sectionTitle": "À propos"
+    }
+  },
+  "en": {
+    "menu": {
+      "home": "Home",
+      "messages": "Messages",
+      "profile": "My Profile",
+      "gallery": "Gallery",
+      "settings": "Settings"
+    },
+    "settingsPage": {
+      "pageTitle": "Settings Page",
+      "language": "Language",
+      "appearance": "Appearance",
+      "securityPrivacy": "Security and Privacy"
+    },
+    "languageSettings": {
+      "sectionTitle": "Language",
+      "appLanguage": "Application Language",
+      "french": "French",
+      "english": "English"
+    },
+    "securitySettings": {
+      "sectionTitle": "Security and Privacy"
+    },
+    "helpSupport": {
+      "sectionTitle": "Help and Support"
+    },
+    "about": {
+      "sectionTitle": "About"
+    }
+  }
+}
